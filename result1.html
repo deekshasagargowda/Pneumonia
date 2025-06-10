@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Add a fixed overlay behind the pop-up to blur the background */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            backdrop-filter: blur(5px); /* Apply the blur effect */
+            z-index: 999; /* Ensure it is behind the pop-up */
+        }
+
+        /* Pop-up styling */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center the pop-up */
+            background-color: red;
+            color: white;
+            padding: 40px 60px; /* Larger padding for a bigger pop-up */
+            border-radius: 20px;
+            font-size: 20px; /* Larger text */
+            font-weight: bold;
+            z-index: 1000; /* Ensure it is on top of the overlay */
+            animation: slideIn 1s forwards;
+            text-align: center;
+            width: 70%; /* Adjust the width */
+            max-width: 600px; /* Max width */
+        }
+
+        /* Success popup */
+        .popup-success {
+            background-color: green;
+        }
+
+        /* Slide in animation */
+        @keyframes slideIn {
+            from {
+                top: -50px;
+                opacity: 0;
+            }
+            to {
+                top: 50%;
+                opacity: 1;
+            }
+        }
+
+        /* Icon animation */
+        .icon {
+            margin-right: 10px;
+            animation: bounce 1s infinite;
+        }
+
+        .icon-tick {
+            animation: tick-bounce 1s infinite;
+        }
+
+        /* Bounce animation */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Tick bounce animation */
+        @keyframes tick-bounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+        .overlay1 {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            backdrop-filter: blur(5px); /* Apply the blur effect */
+            z-index: 999; /* Ensure it is behind the pop-up */
+        }
+
+        /* Pop-up styling */
+        .popup1 {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center the pop-up */
+            background-color: red;
+            color: white;
+            padding: 40px 60px; /* Larger padding for a bigger pop-up */
+            border-radius: 20px;
+            font-size: 20px; /* Larger text */
+            font-weight: bold;
+            z-index: 1000; /* Ensure it is on top of the overlay */
+            animation: slideIn 1s forwards;
+            text-align: center;
+            width: 70%; /* Adjust the width */
+            max-width: 600px; /* Max width */
+        }
+
+        /* Success popup */
+        .popup1 {
+            background-color: rgb(13, 225, 48);
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Pneumonia Detection Result</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/predict">Predict</a>
+            <a href="/cause">Causes</a>
+            <a href="/symptoms">Symptoms</a>
+            <a href="/medicine">Do's & Don'ts</a>
+        </nav>
+    </header>
+
+    <section>
+        <center>
+        <h2>Detection Result</h2>
+        {% if prediction %}
+            {% if prediction == 'Normal' %}
+                <p style="color: green;">Your health is safe! No pneumonia detected.</p>
+                <!-- Overlay for background blur -->
+                <div id="overlay" class="overlay"></div>
+                <div id="popup" class="popup popup-success">
+                    <i class="icon fa fa-check-circle icon-tick"></i>Your health is safe!
+                </div>
+                <script>
+                    // Show the overlay and blur the background
+                    document.getElementById("overlay").style.display = "block";
+                    document.getElementById("popup").style.display = "block";
+    
+                    // Redirect after 5 seconds
+                    setTimeout(function() {
+                        window.location.href = '/'; // Redirect to home page
+                    }, 5000);
+                </script>
+            {% elif prediction == 'Pneumonia' %}
+            <p style="color: rgb(220, 21, 17);"class="popup1">Pneumonia Detected: {{ prediction }}</p>
+            <!-- Overlay for background blur -->
+            <div id="overlay1" class="overlay1"></div>
+            <div id="popup1" class="popup1ssuc">  <!-- Red background for pop-up -->
+                <i class="icon fa fa-exclamation-triangle"></i>Pneumonia Detected!
+            </div>
+            <script>
+                // Show the overlay and blur the background
+                document.getElementById("overlay1").style.display = "block";
+                document.getElementById("popup1").style.display = "block";
+                
+                // Redirect after 5 seconds
+                setTimeout(function() {
+                    window.location.href = '/cause'; // Redirect to cause page
+                }, 5000);
+            </script>
+        {% else %}
+            <p style="color: rgb(8, 246, 28);"> Prediction Result: {{ prediction }}</p>
+        {% endif %}
+        
+        
+        {% else %}
+            <p style="color: red;">Prediction not available or error occurred. Please try again later.</p>
+        {% endif %}
+        </center>
+    </section>
+    
+    
+
+    <footer>
+        <div class="footer-container">
+            <!-- Logo with colored text -->
+            <div class="footer-logo">
+                <h2><span style="color: red;">P</span>neumonia <span style="color: red;">D</span>etection</h2>
+            </div>
+    
+            <!-- Main Content Sections -->
+            <div class="footer-main">
+                <!-- Quick Links Section -->
+                <div class="footer-quick-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/predict">Predict</a></li>
+                        <li><a href="/medicine">Medicines</a></li>
+                        <li><a href="/symptoms">Symptoms</a></li>
+                    </ul>
+                </div>
+    
+                <!-- What is Pneumonia Section -->
+                <div class="description">
+                    <h3>What is Pneumonia?</h3>
+                    <p>
+                        Pneumonia is a serious infection that inflames the air sacs in one or both lungs.  
+                        It can cause symptoms like fever, cough, and difficulty breathing, often requiring medical care.
+                    </p>
+                </div>
+    
+                <!-- Causes of Pneumonia Section -->
+                <div class="description">
+                    <h3>Causes of Pneumonia</h3>
+                    <ul>
+                        <li><i class="fa fa-virus"></i> Viral Infections</li>
+                        <li><i class="fa fa-bacterium"></i> Bacterial Infections</li>
+                        <li><i class="fa fa-cloud"></i> Fungal Infections</li>
+                        <li><i class="fa fa-lungs"></i> Chronic Lung Diseases</li>
+                        <li><i class="fa fa-smoking"></i> Smoking and Pollution</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-container">
+            <!-- Other footer content here -->
+    
+            <p class="copyright">
+                &copy; 2024 All rights reserved | Members: Deeksha Sagar | Sagar | Darshan | Manoj <br> <br>Under the guidance of Prof. Sangareddy BK
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

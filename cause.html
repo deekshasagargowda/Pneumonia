@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cause Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1><span>P</span>neumonia <span>D</span>etection</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/predict">Predict</a>
+            <a href="/cause">Causes</a>
+            <a href="/symptoms">Symptoms</a>
+            <a href="/medicine">Medicine</a>
+        </nav>
+    </header>
+<!-- Section with Image as Background and Text -->
+<div class="section2">
+    <div class="background-image">
+        <img src="{{ url_for('static', filename='css/images/home1.jpg') }}" alt="Health AI" class="background-image" />
+    </div> <!-- Image will be here -->
+    <div class="text">
+        <h2>Cause Prediction</h2>
+        <p>Check If Pneumonia is there, If there you will autmatically redirected!!!</p>
+    </div>
+</div>
+    
+<div class="form2-container">
+    <form action="/cause" method="POST" enctype="multipart/form-data">
+        <label for="file">Upload X-ray Image:</label>
+        <input type="file" name="file" id="file" required>
+        <button type="submit">Predict</button>
+    </form>
+</div>
+
+
+<footer>
+    <div class="footer-container">
+        <!-- Logo with colored text -->
+        <div class="footer-logo">
+            <h2><span style="color: red;">P</span>neumonia <span style="color: red;">D</span>etection</h2>
+        </div>
+
+        <!-- Main Content Sections -->
+        <div class="footer-main">
+            <!-- Quick Links Section -->
+            <div class="footer-quick-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/predict">Predict</a></li>
+                    <li><a href="/medicine">Medicines</a></li>
+                    <li><a href="/symptoms">Symptoms</a></li>
+                </ul>
+            </div>
+
+            <!-- What is Pneumonia Section -->
+            <div class="description">
+                <h3>What is Pneumonia?</h3>
+                <p>
+                    Pneumonia is a serious infection that inflames the air sacs in one or both lungs.  
+                    It can cause symptoms like fever, cough, and difficulty breathing, often requiring medical care.
+                </p>
+            </div>
+
+            <!-- Causes of Pneumonia Section -->
+            <div class="description">
+                <h3>Causes of Pneumonia</h3>
+                <ul>
+                    <li><i class="fa fa-virus"></i> Viral Infections</li>
+                    <li><i class="fa fa-bacterium"></i> Bacterial Infections</li>
+                    <li><i class="fa fa-cloud"></i> Fungal Infections</li>
+                    <li><i class="fa fa-lungs"></i> Chronic Lung Diseases</li>
+                    <li><i class="fa fa-smoking"></i> Smoking and Pollution</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-container">
+        <!-- Other footer content here -->
+
+        <p class="copyright">
+            &copy; 2024 All rights reserved | Members: Deeksha Sagar | Sagar | Darshan | Manoj <br> <br>Under the guidance of Prof. Sangareddy BK
+        </p>
+       
+    </div>
+</footer>
+</body>
+</html>
